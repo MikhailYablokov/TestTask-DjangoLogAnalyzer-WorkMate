@@ -3,9 +3,11 @@
 Успешный запуск:
 - 
 ![image](https://github.com/user-attachments/assets/82e722ab-d4e4-4d75-9337-32ee0ad46e6b)
+- 
 Неправильное название отчета:
 - 
 ![image](https://github.com/user-attachments/assets/23faf100-119f-4173-93f3-353e60d17f18)
+- 
 Работа тестов:
 - 
 ![image](https://github.com/user-attachments/assets/8c4bf4b8-21b7-4c17-8c5c-4ef8868ed08a)

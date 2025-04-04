@@ -1,0 +1,5 @@
+Total requests: 2
+
+HANDLER                    DEBUG          INFO           WARNING        ERROR          CRITICAL      
+/api/users                 1              1              0              0              0              
+                           1              1              0              0              0              

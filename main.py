@@ -1,38 +1,23 @@
-import argparse
 import os
-from typing import List
-from log_parser import parse_logs
-from reports import generate_handlers_report
+from path_parser import parse_command_line
+import reports
 
 def main():
-    parser = argparse.ArgumentParser(description="Django log analyzer")
-    parser.add_argument("log_files", nargs="+", help="Paths to log files")
-    parser.add_argument("--report", required=True, help="Report type (e.g., handlers)")
-    args = parser.parse_args()
+    #Парсинг коммандной строки
+    args = parse_command_line()
 
-    # Проверка существования файлов
-    for log_file in args.log_files:
-        if not os.path.exists(log_file):
-            print(f"Error: File {log_file} does not exist")
-            return
+    # Проверка наличия необходимых аргументов
+    report_name = args["report"]
+    report_func = getattr(reports, f"run_{report_name}", None)
 
-    # Проверка типа отчета
-    # Если я правильно понял, то в теории есть несколько видов отчетов,
-    # если же --report это просто название для файла то это нужно убрать).
-    if args.report != "handlers":
-        print(f"Error: Unknown report type '{args.report}'. Supported: 'handlers'")
+    if not callable(report_func):
+        print(f"Error: Unknown report type '{report_name}'")
         return
 
-    # Парсинг логов
-    data = {}
-    for log_file in args.log_files:
-        parse_logs(log_file, data)
-
-    report = generate_handlers_report(data)
-    # Генерация отчета
-    print(report)
-    with open(f"reports/{args.report}.txt", "w") as report_file:
-        report_file.write(report)
+    try:
+        report_func(args["log_files"])
+    except Exception as e:
+        print(f"Error during report generation: {e}")
 
 if __name__ == "__main__":
     main()
